@@ -6,11 +6,19 @@ export interface IUser extends Document {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  comparePassword: (password: string) => Promise<boolean>;
 }
 
 export interface IUserResponse {
   username: string;
   token?: string;
+  type?: string;
+  expiresIn?: string;
   createdAt?: Date;
   updatedAt?: Date;
+}
+
+export interface IUserLogin {
+  email: string;
+  password: string;
 }

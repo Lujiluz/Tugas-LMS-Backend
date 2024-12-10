@@ -18,4 +18,16 @@ export class UserValidation {
         message: "Password setidaknya harus terdiri dari satu huruf kapital, satu huruf non-kapital, dan satu angka.",
       }),
   });
+
+  static readonly LOGIN: ZodType = z.object({
+    email: z.string().email({ message: "Email address tidak valid" }),
+
+    password: z
+      .string()
+      .min(8, { message: "Password minimal harus terdiri dari 8 karakter" })
+      .max(12, { message: "Password maksimal harus terdiri dari 12 karakter" })
+      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
+        message: "Password tidak valid",
+      }),
+  });
 }

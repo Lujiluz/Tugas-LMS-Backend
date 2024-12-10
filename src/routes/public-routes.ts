@@ -3,4 +3,5 @@ import { UserController } from "../controllers/User.controller";
 
 export const publicRoutes = express.Router();
 
-publicRoutes.post("/users/register", UserController.register);
+publicRoutes.post("/auth/register", UserController.register);
+publicRoutes.post("/auth/login", UserController.login);
