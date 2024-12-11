@@ -24,7 +24,7 @@ export class MateriService {
         path: "kelas",
         select: "-_id name description kelas",
       })
-      .select("-_id -__v");
+      .select("-__v");
 
     return materi;
   }
