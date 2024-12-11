@@ -54,6 +54,7 @@ export class UserService {
         id: user._id,
         username: user.username,
         email: user.email,
+        kelas: user.kelas,
       },
       process.env.JWT_SECRET as string,
       {

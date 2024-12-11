@@ -5,29 +5,33 @@ import { KelasValidation } from "../validations/Kelas.validation";
 import { Validation } from "../validations/validation";
 import UserModel from "../models/User.model";
 import { ResponseError } from "../error/response.error";
+import { IUser } from "../interfaces/User.interface";
 
 export class KelasService {
   static async createKelas(data: Partial<IKelas>): Promise<IKelas> {
     // validasi request create kelas
     const requestKelas = Validation.validate(KelasValidation.CREATE, data);
 
-    const kelas = await KelasModel.create({...requestKelas, user: requestKelas.user});
+    const kelas = await KelasModel.create(requestKelas);
     return kelas;
   }
 
-  static async getKelas(userId: string): Promise<IKelas[]> {
+  static async getKelas(userId: string): Promise<IUser> {
     // validasi userId
     const isUser = await UserModel.countDocuments({ _id: userId });
 
     if (!isUser || isUser == 0) {
       throw new ResponseError(404, "User tidak ditemukan");
     }
-    const kelas = await KelasModel.find({ user: new Types.ObjectId(userId) })
+    const kelas = await UserModel.findById(new Types.ObjectId(userId))
       .populate({
-        path: "user",
-        select: "-_id -__v -createdAt -updatedAt -password",
+        path: "kelas",
+        select: "-_id name description",
       })
-      .select("-_id -__v");
+      .select("username kelas");
+    console.log(kelas);
+
+    if (!kelas) throw new ResponseError(404, "Kelas dengan user ini tidak ditemukan");
     return kelas;
   }
 }

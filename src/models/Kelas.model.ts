@@ -14,11 +14,6 @@ const kelasSchema: Schema = new Schema<IKelas>({
     type: Number,
     required: [true, "Grade kelas harus diisi"],
   },
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: "User",
-    required: [true, "ID User harus diisi"],
-  },
 });
 
 const KelasModel: Model<IKelas> = mongoose.model<IKelas>("kelas", kelasSchema);

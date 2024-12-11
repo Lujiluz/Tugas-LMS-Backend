@@ -1,9 +1,9 @@
 import { z, ZodType } from "zod";
 
-export class KelasValidation {
+export class MateriValidation {
   static readonly CREATE: ZodType = z.object({
     name: z.string(),
     description: z.string(),
-    grade: z.number(),
+    kelas: z.string(),
   });
 }

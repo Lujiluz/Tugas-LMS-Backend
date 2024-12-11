@@ -1,9 +1,10 @@
-import { Document } from "mongoose";
+import { Document, Types } from "mongoose";
 
 export interface IUser extends Document {
   username: string;
   email: string;
   password: string;
+  kelas?: Types.ObjectId | null;
   createdAt: Date;
   updatedAt: Date;
   comparePassword: (password: string) => Promise<boolean>;

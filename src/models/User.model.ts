@@ -26,6 +26,11 @@ const UserSchema: Schema = new Schema<IUser>(
       minLength: 8,
       maxLength: 12,
     },
+    kelas: {
+      type: Schema.Types.ObjectId,
+      ref: "kelas",
+      default: null,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
