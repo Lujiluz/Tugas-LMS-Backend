@@ -6,6 +6,7 @@ import { Validation } from "../validations/validation";
 import UserModel from "../models/User.model";
 import { ResponseError } from "../error/response.error";
 import { IUser } from "../interfaces/User.interface";
+import { AppError } from "../middlewares/error-middlewar";
 
 export class KelasService {
   static async createKelas(data: Partial<IKelas>): Promise<IKelas> {
@@ -21,7 +22,7 @@ export class KelasService {
     const isUser = await UserModel.countDocuments({ _id: userId });
 
     if (!isUser || isUser == 0) {
-      throw new ResponseError(404, "User tidak ditemukan");
+      throw new AppError("User tidak ditemukan", 404);
     }
     const kelas = await UserModel.findById(new Types.ObjectId(userId))
       .populate({
@@ -31,7 +32,7 @@ export class KelasService {
       .select("username kelas");
     console.log(kelas);
 
-    if (!kelas) throw new ResponseError(404, "Kelas dengan user ini tidak ditemukan");
+    if (!kelas) throw new AppError("Kelas dengan user ini tidak ditemukan", 404);
     return kelas;
   }
 }

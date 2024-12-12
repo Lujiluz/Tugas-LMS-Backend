@@ -5,13 +5,12 @@ import { UserValidation } from "../validations/User.validation";
 import { ResponseError } from "../error/response.error";
 
 import jwt from "jsonwebtoken";
+import { AppError } from "../middlewares/error-middlewar";
 
 export class UserService {
   static async registerUser(userData: Partial<IUser>): Promise<IUserResponse> {
     // validasi request register
     const registerRequest = Validation.validate(UserValidation.REGISTER, userData);
-
-    console.log("registerRequest:", registerRequest);
 
     // cek apakah user sudah ada
     const existingUser = await UserModel.findOne({
@@ -19,7 +18,7 @@ export class UserService {
     });
 
     if (existingUser) {
-      throw new ResponseError(400, "Username atau email sudah terdaftar");
+      throw new AppError("Username atau email sudah terdaftar", 400);
     }
 
     // save data user terbaru
@@ -45,7 +44,7 @@ export class UserService {
     const isPasswordValid = user ? await user.comparePassword(payload.password) : false;
 
     if (!user || !isPasswordValid) {
-      throw new ResponseError(400, "Email/Password anda tidak valid");
+      throw new AppError("Email/Password anda tidak valid", 401);
     }
 
     // generate token

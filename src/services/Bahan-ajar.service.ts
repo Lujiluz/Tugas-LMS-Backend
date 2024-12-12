@@ -9,6 +9,7 @@ import { IUser } from "../interfaces/User.interface";
 import { IBahanAjar } from "../interfaces/Bahan-ajar.interface";
 import { BahanAjarValidation } from "../validations/Bahan-ajar.validation";
 import BahanAjarModel from "../models/Bahan-ajar.model";
+import { AppError } from "../middlewares/error-middlewar";
 
 export class BahanAjarService {
   static async createBahanAjar(data: Partial<IBahanAjar>): Promise<IBahanAjar> {
@@ -20,7 +21,7 @@ export class BahanAjarService {
   }
 
   static async getBahanAjar(materiID: string): Promise<IBahanAjar[]> {
-    const bahanAjar = await BahanAjarModel.find({materi: new Types.ObjectId(materiID)})
+    const bahanAjar = await BahanAjarModel.find({ materi: new Types.ObjectId(materiID) })
       .populate({
         path: "materi",
         select: "-_id name description",
@@ -28,7 +29,7 @@ export class BahanAjarService {
       .select("-__v");
     console.log(bahanAjar);
 
-    if (!bahanAjar) throw new ResponseError(404, "Bahan ajar dengan materi ini tidak ditemukan");
+    if (!bahanAjar) throw new AppError("Bahan ajar dengan materi ini tidak ditemukan", 404);
     return bahanAjar;
   }
 }

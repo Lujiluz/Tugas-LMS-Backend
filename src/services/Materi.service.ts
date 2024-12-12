@@ -4,6 +4,7 @@ import MateriModel from "../models/Materi.model";
 import { MateriValidation } from "../validations/Materi.validation";
 import { Validation } from "../validations/validation";
 import { ResponseError } from "../error/response.error";
+import { AppError } from "../middlewares/error-middlewar";
 
 export class MateriService {
   static async createMateri(data: IMateri): Promise<IMateri> {
@@ -17,7 +18,7 @@ export class MateriService {
 
   static async getMateri(kelasId: Types.ObjectId | null): Promise<IMateri[]> {
     if (!kelasId) {
-      throw new ResponseError(400, "ID Tidak valid: Kelas tidak ditemukan");
+      throw new AppError("ID Tidak valid: Kelas tidak ditemukan", 404, "99");
     }
     const materi = await MateriModel.find({ kelas: new Types.ObjectId(kelasId) })
       .populate({

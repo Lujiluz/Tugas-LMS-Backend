@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import connectToDatabase from "./db/mongo";
 import { publicRoutes } from "./routes/public-routes";
 import { apiRoutes } from "./routes/api";
+import { errorMiddleware } from "./middlewares/error-middlewar";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
@@ -49,7 +50,9 @@ app.get("/", (req, res) => {
 
 // import routes
 app.use("/api", publicRoutes);
-app.use('/api', apiRoutes)
+app.use("/api", apiRoutes);
+
+app.use(errorMiddleware);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
