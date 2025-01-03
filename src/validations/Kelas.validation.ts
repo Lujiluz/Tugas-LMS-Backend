@@ -5,5 +5,6 @@ export class KelasValidation {
     name: z.string(),
     description: z.string(),
     grade: z.number(),
+    kelas: z.string()
   });
 }

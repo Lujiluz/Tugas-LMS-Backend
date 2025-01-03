@@ -29,7 +29,7 @@ const UserSchema: Schema = new Schema<IUser>(
     kelas: {
       type: Schema.Types.ObjectId,
       ref: "kelas",
-      default: null,
+      default: () => new mongoose.Types.ObjectId("6759b6745fb3552795ab4804"),
     },
     createdAt: {
       type: Date,

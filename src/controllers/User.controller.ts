@@ -6,9 +6,9 @@ export class UserController {
   static async register(req: Request, res: Response, next: NextFunction) {
     try {
       const request: IUser = req.body as IUser;
+      console.log("payload:", request);
 
       const user = await UserService.registerUser(request);
-      console.log("user console from controller user:", user);
       res.status(201).json({
         status: "success",
         message: "Berhasil membuat user baru",

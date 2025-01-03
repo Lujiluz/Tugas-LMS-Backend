@@ -6,6 +6,7 @@ import { ResponseError } from "../error/response.error";
 
 import jwt from "jsonwebtoken";
 import { AppError } from "../middlewares/error-middlewar";
+import { Types } from "mongoose";
 
 export class UserService {
   static async registerUser(userData: Partial<IUser>): Promise<IUserResponse> {
@@ -22,9 +23,8 @@ export class UserService {
     }
 
     // save data user terbaru
+    // const user = await UserModel.create({ ...registerRequest, kelas: new Types.ObjectId("6759b6745fb3552795ab4804") });
     const user = await UserModel.create(registerRequest);
-
-    console.log("new user data:", user);
 
     return user;
   }

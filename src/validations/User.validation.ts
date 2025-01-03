@@ -17,6 +17,8 @@ export class UserValidation {
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
         message: "Password setidaknya harus terdiri dari satu huruf kapital, satu huruf non-kapital, dan satu angka.",
       }),
+
+    kelas: z.string().optional(),
   });
 
   static readonly LOGIN: ZodType = z.object({

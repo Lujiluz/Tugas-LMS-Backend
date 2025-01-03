@@ -17,19 +17,15 @@ export class KelasService {
     return kelas;
   }
 
-  static async getKelas(userId: string): Promise<IUser> {
+  static async getKelas(userId: string): Promise<IKelas[]> {
     // validasi userId
     const isUser = await UserModel.countDocuments({ _id: userId });
 
     if (!isUser || isUser == 0) {
       throw new AppError("User tidak ditemukan", 404);
     }
-    const kelas = await UserModel.findById(new Types.ObjectId(userId))
-      .populate({
-        path: "kelas",
-        select: "-_id name description",
-      })
-      .select("username kelas");
+
+    const kelas = await KelasModel.find()
     console.log(kelas);
 
     if (!kelas) throw new AppError("Kelas dengan user ini tidak ditemukan", 404);
